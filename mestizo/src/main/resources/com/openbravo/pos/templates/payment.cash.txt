@@ -1,0 +1,41 @@
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright © 2009-2020 uniCenta
+//    http://sourceforge.net/projects/unicentaopos
+//
+//    This file is part of uniCenta oPOS.
+//
+//    uniCenta oPOS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    uniCenta oPOS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+// *************************************************************************
+
+// *************************************************************************
+// All currency payment denominations to show in Payment forms
+// You can find additional prepared currency styles in the Configs folder of 
+// uniCenta oPOS install folder. Use the Import button to load
+//
+// To INCLUDE a denomination remove "//" from the line
+// To EXCLUDE a denomination add "//" to the line
+// *************************************************************************
+
+payment.addButton("img.50", 50.0);
+payment.addButton("img.20", 20.0);
+payment.addButton("img.10", 10.0);
+payment.addButton("img.5", 5.0);
+payment.addButton("img.2", 2.0);
+payment.addButton("img.1", 1.00);
+payment.addButton("img.050", 0.50);
+payment.addButton("img.020", 0.20);
+payment.addButton("img.010", 0.10);
+payment.addButton("img.005", 0.05);
+payment.addButton("img.002", 0.02);
+payment.addButton("img.001", 0.01);

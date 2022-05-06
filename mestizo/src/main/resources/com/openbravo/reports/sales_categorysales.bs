@@ -1,0 +1,64 @@
+//    uniCenta oPOS  - Touch Friendly Point Of Sale
+//    Copyright © 2009-2020 uniCenta & previous Openbravo POS works
+//    https://unicenta.com
+//
+//    This file is part of uniCenta oPOS
+//
+//    uniCenta oPOS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//   uniCenta oPOS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>
+
+report = new com.openbravo.pos.reports.PanelReportBean();
+
+report.setTitleKey("Menu.CategorySales");
+report.setReport("/com/openbravo/reports/sales_categorysales");
+report.setResourceBundle("com/openbravo/reports/sales_messages");
+
+report.setSentence("SELECT " +
+        "R.datenew, " +
+        "C.id, " +
+        "C.name AS CATNAME, " +
+        "SUM(TL.price * TL.units) AS BASE, " +
+        "SUM((TL.price * TL.units) * TX.rate) AS AMOUNT," +
+        "SUM((TL.PRICE+(TL.PRICE*TX.RATE))*TL.units) AS TOTAL, " +
+        "SUM(TL.units) AS UNITS " +
+    "FROM (((((products P " +
+          "CROSS JOIN categories C ON (P.category = C.id)) " +
+         "INNER JOIN ticketlines TL ON (TL.product = P.id)) " +
+        "INNER JOIN taxes TX ON (TL.taxid = TX.id)) " +
+       "INNER JOIN tickets T ON (TL.ticket = T.id)) " +
+      "INNER JOIN receipts R ON (T.id = R.id)) " +
+     "INNER JOIN taxlines TXL ON (TXL.receipt = R.id) AND (TXL.taxid = TX.id) " +
+    "WHERE ?(QBF_FILTER) " +
+    "GROUP BY C.id " +
+    "ORDER BY CATNAME ASC");
+
+report.addParameter("R.DATENEW");
+report.addParameter("R.DATENEW");
+
+paramdates = new com.openbravo.pos.reports.JParamsDatesInterval();
+paramdates.setStartDate(com.openbravo.beans.DateUtils.getToday());
+paramdates.setEndDate(com.openbravo.beans.DateUtils.getTodayMinutes());
+report.addQBFFilter(paramdates);
+
+report.addParameter("C.id");
+report.addQBFFilter(new com.openbravo.pos.ticket.CategoryFilter());
+
+report.addField("DATENEW", com.openbravo.data.loader.Datas.TIMESTAMP);
+report.addField("ID", com.openbravo.data.loader.Datas.STRING);
+report.addField("CATNAME", com.openbravo.data.loader.Datas.STRING);
+report.addField("BASE", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("AMOUNT", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("TOTAL", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("UNITS", com.openbravo.data.loader.Datas.DOUBLE);
+
+report;

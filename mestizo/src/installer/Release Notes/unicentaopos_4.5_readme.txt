@@ -1,0 +1,309 @@
+uniCenta oPOS Beta 4.5
+17 December 2017
+
+THIS IS A BETA RELEASE AND YOU SHOULD NOT RUN IN A LIVE ENVIRONMENT
+
+DO NOT UPGRADE FROM A PREVIOUS VERSION. IT IS NOT RECOMMENDED
+YOU MUST USE DATABASE TRANSFER TOOL - SEE THE DATA TRANSFER GUIDE
+
+BUGS
+1. 
+BUG: Minimising to Taskbar on pop-up (dialog) form is used in Fullscreen mode - Windows only
+FIX: Change to Window [] code block in JRootKiosk - Thanks! Member Hayk Sokolov
+
+2. 
+BUG: Customers Printer.Ticket email missing
+FIX: Add cmail variable
+
+3. 
+BUG: Customer.Paid email error + Operation missing when paid by CreditCard (in standalone mode)
+FIX: Add cmail variable
+
+4. 
+BUG: rpt:DailyPresence only returning one User
+FIX: Rebuild report - XML error + Rebuild usersales.bs
+
+5. 
+BUG: Restaurant mode - change Over-ride when not returning to Table Plan
+FIX: JTicketsBagRestaurantMap - Remove lock and Override
+FIX: JTicketsBagRestaurant - Delete ticket if m_aLines==null)
+
+6. Database Transfer
+BUG: Script fail
+FIX: remove stray ALTER TABLE line in Products block for Memodate
+BUG: Fail on Ticketsnum
+FIX: Add While loop to catch NULL ticketsnum from source db
+
+7. Payments
+BUG: Amount Tendered is null in Paymentstable
+FIX: DataLogicSales saveTicket
+BUG: Voucher is null in Paymentstable
+Fix: DataLogicSales saveTicket
+
+8. Tickets
+BUG: Cash & Tendered not showing correctly on receipt
+FIX: Printer.Ticket template - revise #if Cash code block...
+BUG: Cash & Tendered not showing correctly on receipt preview
+FIX: Printer.Ticket.Preview template - revise #if Cash code block...
+BUG: Cash & Tendered not showing correctly on receipt reprint
+FIX: Printer.ReprintTicket template - revise #if Cash code block...
+BUG: Printer.Ticket - Incorrect Card Total Value
+FIX: Change from ticket.printTotal to paymentline.printTotal
+BUG: Printer.PrintLastTicket - Incorrect Card Total Value
+FIX: Change from ticket.printTotal to paymentline.printTotal
+BUG: Printer.ReprintTicket - Incorrect Card Total Value
+FIX: Change from ticket.printTotal to paymentline.printTotal
+
+9. Vouchers
+Voucher can be reused multiple times in Payments form
+BUG: Voucher Status always Active
+FIX: Evaluation now flagged correctly as D (redeemed)
+BUG: DataLogicCustomers getVoucherInfo SELECT ID ambiguous ref' changed to SELECT vouchers.ID
+
+10. Roles - Administrator + Manager
+BUG: Incorrect report names
+FIX: change dailypresencereport.bs to epm_dailypresence.bs
+FIX: change dailyschedulereport.bs to epm_dailyschedule.bas
+FIX: change performancereport.bs to epm_performance.bs
+FIX: tools_badprice
+     tools_invalidcategory
+     tools_updatedprices
+     tools_inventoryqtyupdate
+     tools_newproducts
+     tools_missingdata
+     tools_invaliddata
+Roles: - Employee
+BUG: Missing Check In/Out
+FIX: Add back Missing <class name="com.openbravo.pos.forms.MenuEmployees" />
+FIX: change/reassign Tools reports names
+
+11. Configuration>SystemOptions
+BUG: Customer; Waiter; Table WebLaf Colour Fieldchooser component causing background error
+FIX: Replace WebLaf Fieldchooser with new instances
+
+12. JNumberDialog
+BUG : Visible input area cropped 
+FIX : Extend panel
+
+13. Printer.Inventory.xml
+BUG: Incorrect Articles count
+FIX: printTotalArticles()
+
+14. JTicketsBagRestaurantMap
+BUG : Override message appears when sales screen loses focus
+FIX : set lockstatus = null on deactivate
+
+15. JPanelTicket
+BUG : Wildcard transaction line fails due to missing values
+FIX : oProduct Ref & Code default values 
+
+16. Report locale properties
+BUG : Slip payment shows as null
+FIX : Add transpayment.slip=Slip to all report locales
+
+posApps
+NEW: Inclusion of new platform REST API for Customer
+See:  https://docs.posapps.io/customer/
+
+Remote Ticket printing
+CHANGE: TicketLineInfo - updated to attributes.ticket.updated
+CHANGE: script.SendOrder change if((printed.... updated to ticket.updated
+CHANGES:  Printer.Ticket.P1-P6
+#if($ticketline.... updated to ticket.updated
+${ticketline.setProperty("ticket.updated", "false")}
+
+CashClose - TO BE COMPLETED
+PaymentSense EOD runs even when Config set to EMV/Dejavoo
+
+REPORTS
+NEW: Voucher
+Add option to Menu.Root>Customers
+submenu.addPanel("/com/openbravo/images/reports.png", "Menu.Customers.Reports.Vouchers", "/com/openbravo/reports/customers_vouchers.bs");
+
+Add Administrator + Manager Permissions to Roles
+Changes to:
+pos_messages.properties
+pos_messages_en_US.properties
+pos_messages_de.properties
+pos_messages_fr.properties
+pos_messages_nl.properties
+pos_messages_it.properties
+pos_messages_es.properties
+pos_messages_es_MX.properties
+pos_messages_es_AR.properties
+pos_messages_ar.properties
+pos_messages_da.properties
+pos_messages_el.properties
+pos_messages_al_SQ.properties
+
+ENHANCEMENTS
+New posApps REST API - Customer option added. 
+Enable/Disable Customer REST API checkbox on posApps settings form
+Add new REST API calls to MySQL-Create and Upgrade scripts
+
+Reintroduce Substance Look and Feel - offers more Skins
+
+AppConfig.java
+ADD: Set common defaults
+
+AppViewConnection
+CHANGE: Extend URL Connection string options
+
+JPanelTicket
+ADD: new Method changeCount()
+ADD: changeCount() calls to buttonTransition Method
+CHANGE: Add calls to new Method on +/- NumberKeys + manual key inputs
+CHANGE: Move & shrink m_jPor label - gives more space when  <class name="sales.ChangeTaxOptions"/> not visible
+ADD: import com.openbravo.beans.JPasswordDialog;
+
+JPanelTicketsBagShared + JPanelTicketsBagRestaurant
+ADD: m_jDelTicket.setEnabled(m_App.getAppUserView().getUser().hasPermission("sales.DeleteTicket")); 
+CHANGE: m_jDelTicketActionPerformed
+
+JProductLineEdit - Allow edit if has permissions
+ADD: m_jUnits.setEnabled(app.getAppUserView().getUser().hasPermission("com.openbravo.pos.sales.JPanelTicketEdits"));   
+CHANGE: Remove Item Name Label and extend field Name input length
+CHANGE: Set all fields - except Name - to Enabled=false
+
+Roles - Administrator; Manager
+NEW: <class name="sales.DeleteTicket"/>   
+
+DinerNumber rename to JNumberDialog for multi-use
+
+Database Transfer
+Add : DB Size check
+Database Transfer form
+Re-work form layout/components for better clarity
+DROP and CREATE Indeces added to: MySQL-dropFkeys.sql & MySQL-Fkeys.sql scripts
+
+All Product Filters
+ADD reset button to clear form fields
+
+rpt:usersales - Add Ticket column
+rpt:cashregisterlog - Add Voucher column
+
+Ticket.Buttons
+Keyboard script set to ENABLED for default
+NEW: Bonus>Images>System>keyboard_48.png
+
+ROLES - Administrator + Manager + Employee + Guest
+ADD: <class name="button.keyboard"/> to Additional Button Scripts
+
+Configuration>general Tab
+ADD: Override and PIN controls
+
+Configuration>SystemOptions Tab
+Set Defaults to Enabled:
+Auto Refresh
+Show Customer Detail... + change colour from #FFFFFF to #58B000 default
+Show User's detail...  + change colour from #FFFFFF to #258FB0 default
+Table Name text colour... change colour from #FFFFFF to #D62E52 default
+
+Configuration>Database
+CHANGE: Revise & separate Database connection layouts to allow for additional connection string options
+
+VoucherEditor
+NEW: Add Status to form + Change Object
+CHANGE: to form fields to prevent edit of Redeemed voucher
+CHANGE: Replace webLaf ComboBox with Swing jComboBox
+
+VoucherInfo
+NEW: Add Status to voucherInfo model
+
+CloseCash
+CHANGE: Replace webLaf ComboBox with Swing jComboBox
+
+Ticket Printing: BasicTicketForPrinter; Basic TicketForScreen
+Faint print using Monospaced BASEFONT replaced with Courier New
+
+Payments>Voucher
+ADD: Status to Voucher tab
+
+Resources>Payment Denominations
+ADD: New denomination value images
+ADD: New currency denomination values
+ADD: payments_uk; payments_us; payments_euro
+
+MySQL-create.sql
+ADD: New domination images
+
+Templates
+CHANGE: move images from /com/openbravo/pos/templates/ to /com/openbravo/pos/images/
+
+Place.java
+CHANGE: Add 24 x tables - fits 1024 x 768
+
+JRootApp
+CHANGE: End Of Life Upgrade option + notification to Database Transfer Tool
+ADD: Functionality for use with new FtpUpload class
+
+NEW: FtpUpload class
+uniCenta Customer Support Install/Launch silent logger
+
+CategoriesEditor
+NEW: Category's related Products table
+NEW: CategoryStock.java class
+ADD: Product Count
+CHANGE: Layout for table
+
+DataLogicSales
+NEW: getCategorysProductList
+
+CustomersView
+ADD: Transaction Count 
+
+PaymentInofMagcard
+CHANGE: legacy magcard return value changed to ccard
+
+PaymentInofMagcardRefund
+CHANGE: legacy magcardrefund return value changed to ccardrefund
+
+All Ticket Templates
+CHANGE: legacy magcard & magcardrefund text values to ccard & ccardrefund
+
+All locale properties
+CHANGE: legacy magcard & magcardrefund text values to ccard & ccardrefund
+
+All Report properties
+CHANGE: legacy magcard & magcardrefund text values to ccard & ccardrefund
+
+PlacesEditor
+ADD: Seats
+CHANGE: MySQL-create.sql - add seats to sql staement
+
+JPanelPlaces
+CHANGE: Add seats references
+
+Refactor sales.PrintKitchen to sales.PrintRemote
+CHANGE : Roles, JPanelTicket
+
+JTicketsFinder
+ADD : Set StartDate default to today
+ADD : Show TicketCount
+
+JTicketsBagRestaurantMap
+ADD : Drag and Drop table plan
+
+Place
+ADD : seats getter/setter
+ADD : table xy gettter/setters
+
+Ticket.Buttons
+CHANGE : unComment base
+<taxesincluded value="true"/>
+<taxcategoryid value="001"/>
+<pricevisible value="true" />
+
+JTicketLines
+CHANGE : Enable Column sorting - Click on column title - m_jTicketTable.getTableHeader().setReorderingAllowed(true);
+CHANGE : TableHeader Font Size 18
+
+ThumbNailBuilder - Remove button overlay for better visibilty when used with Skins
+CHANGE : Switch of g2d.fillRect(0 , 0, imgtext.getWidth(), label.getHeight()); 
+ADD: m_jTicketTable.setAutoCreateRowSorter(true);
+
+CustomerdView
+CHANGE : Update Transactions table properties
+
+SuppliersView
+CHANGE : Update Product table properties

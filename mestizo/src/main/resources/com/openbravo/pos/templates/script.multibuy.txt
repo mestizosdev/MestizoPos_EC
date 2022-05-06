@@ -1,0 +1,85 @@
+// script.posapps.txt
+//
+//    uniCenta oPOS - Touch Friendly Point Of Sale
+//    Copyright © 2009-2020 uniCenta
+//    https://unicenta.com & https://posapps.io
+//
+//    This file is part of uniCenta oPOS.
+//
+//    uniCenta oPOS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    uniCenta oPOS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+// **************************************************************************
+// This script opens up the posapps settings / config screen
+
+import com.openbravo.pos.ticket.TicketLineInfo;
+
+index = sales.getSelectedIndex();
+if (index != -1)
+
+{
+    line = ticket.getLine(index);
+    int count = Integer.parseInt(line.getProperty("COUNT", "0"));
+    Double newPrice1 = new Double(line.getProperty("PRICE", "0"));
+    String groupName = line.getProperty("GROUP", "0");
+    if (count > 0) {
+        int productCount = 0;
+        int discountsAlreadyApplied = 0;
+        String productID = line.getProductID();
+
+        for (TicketLineInfo ticketLine: ticket.getLines()) {
+            boolean grouped = groupName.equals(ticketLine.getProperty("GROUP", "0"));
+            boolean multi = count > 0;
+            if (multi && grouped) {
+                productCount++;
+            }
+            if (ticketLine.getProductName().contains("Buy")) {
+                discountsAlreadyApplied = discountsAlreadyApplied + count;
+            }
+        }
+
+        if (count == (productCount - discountsAlreadyApplied)) {
+
+            newPrice2 = -(line.getPriceTax() * count) + newPrice1;
+
+
+            ticket.insertLine(ticket.getLinesCount(),
+                new TicketLineInfo(
+                    "Buy " + count + " for £" + (line.getProperty("PRICE")),ox
+                    line.getProductTaxCategoryID(),
+                    "",
+                    1,
+                    0,
+                    line.getTaxInfo()));
+
+
+            sales.setSelectedIndex(ticket.getLinesCount() - 1);
+            index = sales.getSelectedIndex();
+            line = ticket.getLine(index);
+            line.setPriceTax(newPrice2);
+            sales.setSelectedIndex(ticket.getLinesCount() - 2);
+
+
+
+            /* Remove BOGO property to start fresh */
+            for (i = 0; i < ticket.getLinesCount(); i++) {
+                if (productID.equals(ticket.getLine(i).getProductID())) {
+                    ticket.getLine(i).setProperty("COUNT", "0");
+                }
+            }
+        }
+
+
+        sales.setSelectedIndex(ticket.getLinesCount() - 1);
+    }
+}
+//END MULTI BUY
