@@ -957,7 +957,7 @@ public class JPanelConfigDatabase extends javax.swing.JPanel implements PanelCon
             jLblDBServerversion.setVisible(true);        
             jLblDBServerversion.setText(" MySQL Server : " + rs.getString(1));
             
-            if (!rs.getString(1).equals("5.7")) {
+            if (!rs.getString(1).equals("8.0")) {
                 jLblDBServerversion.setBackground(Color.RED);
                 JOptionPane.showMessageDialog(this, 
                 AppLocal.getIntString("message.databasefail"), 

@@ -267,14 +267,14 @@ public class AppConfig implements AppProperties {
     m_propsconfig.setProperty("override.pin", "");
 
     m_propsconfig.setProperty("db.driverlib", new File(new File(dirname)
-            , "mysql-connector-java-5.1.39.jar").getAbsolutePath());
+            , "mysql-connector-java-8.0.29.jar").getAbsolutePath());
     m_propsconfig.setProperty("db.engine", "MySQL");
     m_propsconfig.setProperty("db.driver", "com.mysql.jdbc.Driver");
 
 // primary DB
     m_propsconfig.setProperty("db.name", "Main DB");
     m_propsconfig.setProperty("db.URL", "jdbc:mysql://localhost:3306/");
-    m_propsconfig.setProperty("db.schema", "unicentaopos");
+    m_propsconfig.setProperty("db.schema", "mestizo");
     m_propsconfig.setProperty("db.options", "?zeroDateTimeBehavior=convertToNull");
     m_propsconfig.setProperty("db.user", "username");
     m_propsconfig.setProperty("db.password", "password");
@@ -282,7 +282,7 @@ public class AppConfig implements AppProperties {
 // secondary DB        
     m_propsconfig.setProperty("db1.name", "");
     m_propsconfig.setProperty("db1.URL", "jdbc:mysql://localhost:3306/");
-    m_propsconfig.setProperty("db1.schema", "unicentaopos");
+    m_propsconfig.setProperty("db1.schema", "mestizo");
     m_propsconfig.setProperty("db1.options", "?zeroDateTimeBehavior=convertToNull");
     m_propsconfig.setProperty("db1.user", "");
     m_propsconfig.setProperty("db1.password", "");
