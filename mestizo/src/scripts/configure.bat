@@ -19,7 +19,7 @@ REM    You should have received a copy of the GNU General Public License
 REM    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>
 REM
 set DIRNAME=%~dp0
-set CP="%DIRNAME%unicentaopos.jar"
+set CP="%DIRNAME%mestizopos.jar"
 set CP=%CP%;"%DIRNAME%locales/"
 
 start /B javaw -cp %CP% com.openbravo.pos.config.JFrmConfig

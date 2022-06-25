@@ -19,7 +19,7 @@
 #    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
 
 DIRNAME=`dirname $0`
-CP=$DIRNAME/unicentaopos.jar
+CP=$DIRNAME/mestizopos.jar
 
 CP=$CP:$DIRNAME/locales/
 CP=$CP:$DIRNAME/reports/

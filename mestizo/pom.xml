@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.unicenta</groupId>
-  <artifactId>unicentaopos</artifactId>
+  <groupId>dev.mestizo</groupId>
+  <artifactId>mestizopos</artifactId>
   <version>4.6.4</version>
   <packaging>jar</packaging>
   <properties>
@@ -541,7 +541,7 @@
         <version>2.10</version>
       </extension>
     </extensions>
-    <finalName>unicentaopos</finalName>
+    <finalName>mestizopos</finalName>
   </build>
   <repositories>
     <repository>
@@ -568,5 +568,5 @@
       <uniqueVersion>false</uniqueVersion>
     </repository>
   </distributionManagement>
-  <name>unicentaopos</name>
+  <name>mestizopos</name>
 </project>

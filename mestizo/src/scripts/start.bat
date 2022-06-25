@@ -20,7 +20,7 @@ REM    along with uniCenta oPOS.  If not, see http://www.gnu.org/licenses/>
 REM
 
 set DIRNAME=%~dp0
-set CP="%DIRNAME%unicentaopos.jar"
+set CP="%DIRNAME%mestizopos.jar"
 
 set CP=%CP%;"%DIRNAME%lib/bsh-core-2.0b4.jar"
 set CP=%CP%;"%DIRNAME%lib/barcode4j-2.0.jar"
