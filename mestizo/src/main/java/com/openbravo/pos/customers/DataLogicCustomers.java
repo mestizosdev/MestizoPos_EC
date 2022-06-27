@@ -86,7 +86,8 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                 "IMAGE",
                 "ISVIP",
                 "DISCOUNT",
-                "MEMODATE"
+                "MEMODATE",
+                "TAXID_TYPE"
             }
             , new String[] { 
                 "ID", 
@@ -115,7 +116,8 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                 "IMAGE",
                 "ISVIP",
                 "DISCOUNT",
-                "MEMODATE"
+                "MEMODATE",
+                "TAXID_TYPE"
             }
             , new Datas[] { 
                 Datas.STRING, //id
@@ -144,7 +146,8 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                 Datas.IMAGE, //image
                 Datas.BOOLEAN, //isvip
                 Datas.DOUBLE, //discount
-                Datas.TIMESTAMP //memodate                
+                Datas.TIMESTAMP, //memodate                
+                Datas.STRING //taxid_type
             }
             , new Formats[] {
                 Formats.STRING, //id
@@ -173,7 +176,8 @@ public class DataLogicCustomers extends BeanFactoryDataSingle {
                 Formats.NULL, //image
                 Formats.BOOLEAN, //isvip
                 Formats.DOUBLE,  //discount
-                Formats.TIMESTAMP //memodate                
+                Formats.TIMESTAMP, //memodate    
+                Formats.STRING //taxid_type
             }
             , new int[] {0}
         );   

@@ -27,6 +27,7 @@ import com.openbravo.format.Formats;
 import com.openbravo.pos.catalog.CategoryStock;
 import com.openbravo.pos.customers.CustomerInfoExt;
 import com.openbravo.pos.customers.CustomerTransaction;
+import com.openbravo.pos.customers.IdentificationTypeInfo;
 import com.openbravo.pos.inventory.*;
 import com.openbravo.pos.mant.FloorsInfo;
 import com.openbravo.pos.payment.PaymentInfo;
@@ -44,6 +45,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.io.File;
+import org.jfree.data.general.Dataset;
 
 /**
  *
@@ -2823,6 +2825,22 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             }
         };
     }
-
-
+    
+    public SentenceList getIdentificationTypeList() {
+        return new StaticSentence(s, 
+                new QBFBuilder("select code, name from identification_type "
+                        + "where status = 'Active' "
+                        + "order by name", 
+                        new String[] {"code", "name"}),
+        new SerializerWriteBasic(new Datas[] {
+            Datas.OBJECT, Datas.STRING,
+            Datas.OBJECT, Datas.STRING
+        }),
+        (DataRead dr) -> {
+            IdentificationTypeInfo i = new IdentificationTypeInfo(dr.getString(1));
+            i.setName(dr.getString(2));
+            
+            return i;
+        });
+    }
 }

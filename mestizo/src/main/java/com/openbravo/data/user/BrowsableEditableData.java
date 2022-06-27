@@ -410,7 +410,7 @@ public class BrowsableEditableData {
 
         //Get the customer being referenced for firing action events
         boolean isCustomerChangeEvent = false;
-        Object[] customer = new Object[27];
+        Object[] customer = new Object[29];
         if (m_editorrecord.getClass().getName().equals("com.openbravo.pos.customers.CustomersView")) {
             isCustomerChangeEvent = true;
             customer = (Object[]) m_editorrecord.createValue();
@@ -423,7 +423,7 @@ public class BrowsableEditableData {
                 baseMoveTo(i);
 
                 if (isCustomerChangeEvent) {
-                    triggerCustomerEvent("customer.updated", customer, customer[27]);
+                    triggerCustomerEvent("customer.updated", customer, customer[28]);
                 }
 
 
@@ -432,12 +432,12 @@ public class BrowsableEditableData {
                 if (isCustomerChangeEvent) {
                     m_editorrecord.refresh();
 
-                    AppView appView = (AppView) customer[27];
+                    AppView appView = (AppView) customer[28];
                     int i = m_bd.insertRecord(customer);
                     m_editorrecord.refresh();
                     baseMoveTo(i);
 
-                    triggerCustomerEvent("customer.created", customer, customer[27]);
+                    triggerCustomerEvent("customer.created", customer, customer[28]);
 
                     int n = JOptionPane.showConfirmDialog(
                           null, 
@@ -466,7 +466,7 @@ public class BrowsableEditableData {
                 baseMoveTo(i);
 
                 if (isCustomerChangeEvent) {
-                    triggerCustomerEvent("customer.deleted", customer, customer[27]);
+                    triggerCustomerEvent("customer.deleted", customer, customer[28]);
                 }
             }
         }   

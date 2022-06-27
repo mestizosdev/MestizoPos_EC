@@ -171,6 +171,7 @@ CREATE TABLE `customers` (
 	`isvip` bit(1) NOT NULL default b'0',
 	`discount` double default '0',
 	`memodate` datetime default '2000-01-01 00:00:01',
+        `taxid_type` varchar(90) not null,
 	KEY `customers_card_inx` ( `card` ),
 	KEY `customers_name_inx` ( `name` ),
 	UNIQUE INDEX `customers_skey_inx` ( `searchkey` ),
@@ -670,6 +671,14 @@ CREATE TABLE `vouchers` (
   PRIMARY KEY ( `id` )
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT = DYNAMIC;
 
+CREATE TABLE `identification_type` (
+    `code`          VARCHAR(90) not null,
+    `name`          VARCHAR(100) not null,
+    `legal_code`    VARCHAR(100) null,
+    `status`        VARCHAR(10) not null default 'Active',
+    primary key (`code`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT = DYNAMIC;
+
 -- Update foreign keys of attributeinstance
 ALTER TABLE `attributeinstance` ADD CONSTRAINT `attinst_att`
 	FOREIGN KEY ( `attribute_id` ) REFERENCES `attribute` ( `id` );
@@ -1003,6 +1012,12 @@ INSERT INTO pickup_number VALUES(1);
 INSERT INTO ticketsnum VALUES(1);
 INSERT INTO ticketsnum_refund VALUES(1);
 INSERT INTO ticketsnum_payment VALUES(1);
+
+-- ADD IDENTIFICATION TYPES FOR ECUADOR
+INSERT INTO identification_type(code, name) VALUES ('C', 'Cédula');
+INSERT INTO identification_type(code, name) VALUES ('R', 'RUC');
+INSERT INTO identification_type(code, name) VALUES ('P', 'Pasaporte');
+INSERT INTO identification_type(code, name) VALUES ('CF', 'Consumidor Final');
 
 -- ADD APPLICATION VERSION
 INSERT INTO applications(id, name, version) VALUES($APP_ID{}, $APP_NAME{}, $APP_VERSION{});
