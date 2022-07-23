@@ -466,7 +466,7 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     // Barcode is equal to sequence product if barcode is null   
     String barcode = m_jCode.getText();
     barcode = barcode.replaceAll("\\s", "");
-    if (barcode.equals("") || barcode == null || barcode.isEmpty()) {
+    if (barcode.equals("") || barcode.isEmpty()) {
         myprod[2] = myprod[1];
     } else {
         myprod[2] = barcode;
