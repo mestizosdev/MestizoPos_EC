@@ -949,7 +949,7 @@ INSERT INTO taxes(id, name, category, custcategory, parentid, rate, ratecascade,
 INSERT INTO products(id, reference, code, name, pricesell, category, taxcat, isservice, display, printto, uom) 
 VALUES ('1', '1', '1', 'Producto tarifa 0%', 1, '000', '000', 1, '<html><center>Producto tarifa 0%', '1', 'u');
 INSERT INTO products(id, reference, code, name, pricesell, category, taxcat, isservice, display, printto, uom) 
-VALUES ('2', '2', '2', 'Producto tarifa 12%', 1, '000', '001', 1, '<html><center>Producto tarifa 0%', '1', 'u');
+VALUES ('2', '2', '2', 'Producto tarifa 12%', 1, '000', '001', 1, '<html><center>Producto tarifa 12%', '1', 'u');
 
 -- ADD PRODUCTS_CAT
 INSERT INTO products_cat(product) VALUES ('1');
