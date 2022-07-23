@@ -474,7 +474,7 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     
     myprod[3] = m_jCodetype.getSelectedItem();
     myprod[4] = m_jName.getText();
-    myprod[5] = Formats.CURRENCY.parseValue(m_jPriceBuy.getText());
+    myprod[5] = Formats.CURRENCY.parseValue(m_jPriceBuy.getText().replace(".", ","));
     myprod[6] = pricesell;
     myprod[7] = m_CategoryModel.getSelectedKey();
     myprod[8] = taxcatmodel.getSelectedKey();
@@ -927,8 +927,8 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
 
     if (!reportlock) {
       reportlock = true;
-
-      Double dPriceBuy = readCurrency(m_jPriceBuy.getText());
+      // replace dot for comma in case use keyboard numeric
+      Double dPriceBuy = readCurrency(m_jPriceBuy.getText().replace(".", ","));
       Double dPriceSell = (Double) pricesell;
 
       if (dPriceBuy == null || dPriceSell == null) {
@@ -1001,7 +1001,8 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     if (!reportlock) {
       reportlock = true;
 
-      Double dPriceSellTax = readCurrency(m_jPriceSellTax.getText());
+      // replace dot for comma in case use keyboard numeric
+      Double dPriceSellTax = readCurrency(m_jPriceSellTax.getText().replace(".", ","));
 
       if (dPriceSellTax == null) {
         setPriceSell(null);
@@ -1030,7 +1031,7 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     public void changedUpdate(DocumentEvent e) {
       if (!priceselllock) {
         priceselllock = true;
-        pricesell = readCurrency(m_jPriceSell.getText());
+        pricesell = readCurrency(m_jPriceSell.getText().replace(".", ","));
         priceselllock = false;
       }
       calculateMargin();
@@ -1042,7 +1043,7 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     public void insertUpdate(DocumentEvent e) {
       if (!priceselllock) {
         priceselllock = true;
-        pricesell = readCurrency(m_jPriceSell.getText());
+        pricesell = readCurrency(m_jPriceSell.getText().replace(".", ","));
         priceselllock = false;
       }
       calculateMargin();
@@ -1054,7 +1055,7 @@ public final class ProductsEditor extends javax.swing.JPanel implements EditorRe
     public void removeUpdate(DocumentEvent e) {
       if (!priceselllock) {
         priceselllock = true;
-        pricesell = readCurrency(m_jPriceSell.getText());
+        pricesell = readCurrency(m_jPriceSell.getText().replace(".", ","));
         priceselllock = false;
       }
       calculateMargin();
