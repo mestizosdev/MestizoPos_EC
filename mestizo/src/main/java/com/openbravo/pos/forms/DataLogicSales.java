@@ -2843,4 +2843,12 @@ public class DataLogicSales extends BeanFactoryDataSingle {
             return i;
         });
     }
+    
+    // Sequence for products table in reference column
+    public PreparedSentence getProductSequence() {
+        return new PreparedSentence(s, 
+                "select cast(ifnull(max(cast(reference as unsigned) + 1), 1) as char(10)) as sequence from products",
+                null, 
+                (DataRead dr) -> dr.getString(1));
+    }
 }
